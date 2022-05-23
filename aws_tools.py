@@ -124,10 +124,15 @@ def calc_emissivity(LW_upwell,LW_downwell,ground_temp,plot=1):
 
     return eps
 
-def plot_timeseries(dataframe, fields, ylbl, legend=None, period=None, loc='upper right'):
+def plot_timeseries(dataframe, fields, ylbl, legend=None, period=None, loc='upper right', colors=None):
 
+    n = 0
     for field in fields:
-        plt.plot(dataframe[field])
+        if colors is not None:
+            plt.plot(dataframe[field], c=colors[n])
+        else:
+            plt.plot(dataframe[field])
+        n=n+1
     plt.ylabel(ylbl)
     if period is not None:
         plt.xlim(period)
@@ -449,7 +454,7 @@ def transfer_AWS_data(aws_full, aws_partial, proj_dir, period=None):
 
 def extrap_MCKA2():
     proj_dir = '/Users/ericpetersen/Documents/Kennicott_Project/Field_Data/AWS_Data/'
-    aws_debris_file = proj_dir + 'AWS_Debris_2021/CR1000/07_13/CR1000_MetData.dat'
+    aws_debris_file = proj_dir + 'AWS_Debris_2021/CR1000/09_11/EKT_MetData_2021-09-11T21-28.dat'
     MCKA2_file = proj_dir + 'May_Creek/raw_downloads/MCKA2_2021.csv'
 
     aws_debris = pd.read_csv(aws_debris_file, header=1, skiprows=[2,3], index_col=0, parse_dates=True)
